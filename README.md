@@ -188,11 +188,11 @@ function App(): React.JSX.Element {
 const startSSO = () => {
 const userInfo = JSON.stringify({
 name: 'Developer Daya',
-email: 'developerdaya@gmail.com',
-mobile: '7054576474',
+email: 'developerdaya123@gmail.com',
+mobile: '9988774455',
 });
-const client_base_url = "https://mocktest.jagranjosh.com"
-const redirect_url = "https://mocktest.jagranjosh.com";
+const client_base_url = "https://stgtestseries.edugorilla.com
+const redirect_url = "https://stgtestseries.edugorilla.com;
 SsoSdkModule.initializeBaseUrlAndFileLocation(client_base_url);
 SsoSdkModule.encryptUrlAndOpenWebView(userInfo, redirect_url);
 };
