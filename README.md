@@ -10,16 +10,9 @@ Once you get the private_key then proceed further.
 implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'
 ```
 ---
-### 2. **Modify the MainApplication**
-- Add the SsoSdkPackage to include SDK functionality in the React Native application.
-
-`android/app/src/main/java/com/your_project_name/MainApplication.kt`:
-```kotlin
-override fun getPackages(): List<ReactPackage> = PackageList(this).packages.apply {
-  add(SsoSdkPackage())
-}
-
-```
+### 2. **Add Private Key File**
+* Create a `res/raw` directory in `android/app/src/main`.  
+* Place the `private_key` file inside it.
 ---
 ### 3. **Create the SSO SDK Module**
 
@@ -58,6 +51,8 @@ class SsoSdkModule(reactContext: ReactApplicationContext) :
 }
 ```
 ---
+---
+
 ### 4. **Create the SSO SDK Package**
 * This file defines the SsoSdkPackage, which registers the SsoSdkModule with React Native.
 * It ensures the native module is accessible from the JavaScript layer of the React Native app.
@@ -82,11 +77,17 @@ class SsoSdkPackage : ReactPackage {
 }
 ```
 ---
-### 5. **Add Private Key File**
-* Create a `res/raw` directory in `android/app/src/main`.  
-* Place the `private_key` file inside it.
+### 5. **Modify the MainApplication**
+- Add the SsoSdkPackage to include SDK functionality in the React Native application.
 
----
+`android/app/src/main/java/com/your_project_name/MainApplication.kt`:
+```kotlin
+override fun getPackages(): List<ReactPackage> = PackageList(this).packages.apply {
+  add(SsoSdkPackage())
+}
+
+```
+
 ### 6. **Initialize the Edugorilla SSO SDK from JavaScript**
 ```tsx
 // Import the native module for integrating Edugorilla SSO SDK functionality.
@@ -117,8 +118,6 @@ This is our sample App:
 
 
 For any query feel free to contact our support team on
-
-Phone: 0522-3514751
-
-Email: [support@edugorilla.org](https://mailto:support@edugorilla.org)
+  * Phone: 0522-3514751
+  * Email: [support@edugorilla.org](https://mailto:support@edugorilla.org)
 
