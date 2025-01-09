@@ -10,63 +10,22 @@ Once you get the private_key then proceed further.
 dependencies {implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'}
 ```
 ---
-### 2. **Create the MainActivity**
-- Add the following Kotlin code in `android/app/src/main/java/com/your_project_name/MainActivity.kt`:
-```kotlin
-package com.your_project_name
-import com.facebook.react.ReactActivity
-import com.facebook.react.ReactActivityDelegate
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
-import com.facebook.react.defaults.DefaultReactActivityDelegate
-class MainActivity : ReactActivity() {
-override fun getMainComponentName(): String = "your_project_name"
-override fun createReactActivityDelegate(): ReactActivityDelegate =
-DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
-}
-```
----
-### 3. **Create the MainApplication**
-- Add the following Kotlin code in
+### 3. **Modify the MainApplication**
+- Add the SsoSdkPackage to include SDK functionality in the React Native application.
+
 `android/app/src/main/java/com/your_project_name/MainApplication.kt`:
 ```kotlin
-package com.your_project_name
-import android.app.Application
-import com.facebook.react.PackageList
-import com.facebook.react.ReactApplication
-import com.facebook.react.ReactHost
-import com.facebook.react.ReactNativeHost
-import com.facebook.react.ReactPackage
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
-import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
-import com.facebook.react.defaults.DefaultReactNativeHost
-import com.facebook.react.soloader.OpenSourceMergedSoMapping
-import com.facebook.soloader.SoLoader
-class MainApplication : Application(), ReactApplication {
-override val reactNativeHost: ReactNativeHost =
-object : DefaultReactNativeHost(this) {
 override fun getPackages(): List<ReactPackage> =
 PackageList(this).packages.apply {
 add(SsoSdkPackage())
 }
-override fun getJSMainModuleName(): String = "index"
-override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
-override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
-override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
-}
-override val reactHost: ReactHost
-get() = getDefaultReactHost(applicationContext, reactNativeHost)
-override fun onCreate() {
-super.onCreate()
-SoLoader.init(this, OpenSourceMergedSoMapping)
-if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-load()
-}
-}
-}
+
 ```
 ---
 ### 4. **Create the SSO SDK Module**
-- Add the following code in `android/app/src/main/java/com/your_project_name/SsoSdkModule.kt`:
+
+ * This module serves as a bridge between React Native and the Edugorilla SSO SDK.
+`android/app/src/main/java/com/your_project_name/SsoSdkModule.kt`:
 ```kotlin
 package com.your_project_name
 import android.content.Context
@@ -95,7 +54,9 @@ EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUr
 ```
 ---
 ### 5. **Create the SSO SDK Package**
-- Add the following code in `android/app/src/main/java/com/your_project_name/SsoSdkPackage.kt`:
+* This file defines the SsoSdkPackage, which registers the SsoSdkModule with React Native.
+* It ensures the native module is accessible from the JavaScript layer of the React Native app.
+`android/app/src/main/java/com/your_project_name/SsoSdkPackage.kt`:
 ```kotlin
 package com.your_project_name
 import com.facebook.react.ReactPackage
@@ -142,49 +103,27 @@ return Collections.emptyList()
 </application>
 ```
 ---
-### 8. **Create the Index File**
-- Add the following code in `index.js`:
-```javascript
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
-AppRegistry.registerComponent(appName, () => App);
-```
----
-### 9. **Create the App Component**
-- Add the following code in `App.tsx`:
+### 9. **Initialize the Edugorilla SSO SDK from JavaScript**
 ```tsx
-import React from 'react';
-import {SafeAreaView, Button, StyleSheet} from 'react-native';
+// Import the native module for integrating Edugorilla SSO SDK functionality.
 import {NativeModules} from 'react-native';
 const {SsoSdkModule} = NativeModules;
-function App(): React.JSX.Element {
+
 const startSSO = () => {
-const userInfo = JSON.stringify({
-name: 'DeveloperDaya',
-email: 'developerdaya123@gmail.com',
-mobile: '9988774455',
-});
-const client_base_url = "https://stgtestseries.edugorilla.com"
-const redirect_url = "https://stgtestseries.edugorilla.com";
-SsoSdkModule.initializeBaseUrlAndFileLocation(client_base_url);
-SsoSdkModule.encryptUrlAndOpenWebView(userInfo, redirect_url);
+  const userInfo = JSON.stringify({
+    name: 'John Doe',
+    email: 'johndoe@example.com', 
+    mobile: '1234567890',
+  });
+
+  const client_base_url = "your_base_url";
+  const redirect_url = "your_redirect_page_url";
+
+  SsoSdkModule.initializeBaseUrlAndFileLocation(client_base_url);
+  SsoSdkModule.encryptUrlAndOpenWebView(userInfo, redirect_url);
 };
-return (
-<SafeAreaView style={styles.container}>
-<Button title="Start SSO SDK" onPress={startSSO} />
-</SafeAreaView>
-);
-}
-const styles = StyleSheet.create({
-container: {
-flex: 1,
-justifyContent: 'center',
-alignItems: 'center',
-backgroundColor: '#f8f9fa',
-},
-});
-export default App;
+
+<Button title="Start SSO" onPress={startSSO} />;
 
 ```
 
@@ -192,9 +131,10 @@ export default App;
 This is our sample App:
 [https://gitlab.com/shashwat-vik/react-native-sdk-example](https://gitlab.com/shashwat-vik/react-native-sdk-example)
 
+
 For any query you feel free to contact our support team on
 
-0522-3514751.
+Phone: 0522-3514751
 
-[support@edugorilla.org](https://mailto:support@edugorilla.org).
+Email: [support@edugorilla.org](https://mailto:support@edugorilla.org)
 
