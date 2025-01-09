@@ -1,3 +1,8 @@
+### Requirement:
+Connect to the support team to get the private_key for React Native SSO SDK. You can connect by using Phone no. 0522-3514751 or sending a mail over [support@edugorilla.org](https://mailto:support@edugorilla.org).
+Once you got the private_key then proceed further.
+
+
 **Step-by-Step Guide: Setting Up and Integrating SSO SDK in React Native**
 ---
 ### 1. **Setup React Native Project**
@@ -211,13 +216,10 @@ backgroundColor: '#f8f9fa',
 },
 });
 export default App;
-```
----
-### 11. **Run the Application**
-- Use the following commands to build and run the app:
-```sh
-cd android
-./gradlew sync
-./gradlew build
-npx react-native run-android
-```
+
+### Congratulation! Your integration is finished.
+This is our sample App: react-native-sdk-example
+[https://gitlab.com/shashwat-vik/react-native-sdk-example](https://gitlab.com/shashwat-vik/react-native-sdk-example)
+For any query you feel free to contact our support team on
+0522-3514751.
+[support@edugorilla.org](https://mailto:support@edugorilla.org).
