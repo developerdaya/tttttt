@@ -219,6 +219,5 @@ export default App;
 cd android
 ./gradlew sync
 ./gradlew build
-npx react-native start
 npx react-native run-android
 ```
