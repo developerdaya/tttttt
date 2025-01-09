@@ -54,6 +54,7 @@ fun encryptUrlAndOpenWebView(userInfo: String, redirectUrl: String) {
 val user_info: JSONObject = JSONObject(userInfo)
 EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUrl)
 }
+
 }
 ```
 ---
