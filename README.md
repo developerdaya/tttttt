@@ -16,7 +16,7 @@ implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'
 `android/app/src/main/java/com/your_project_name/MainApplication.kt`:
 ```kotlin
 override fun getPackages(): List<ReactPackage> = PackageList(this).packages.apply {
-add(SsoSdkPackage())
+  add(SsoSdkPackage())
 }
 
 ```
@@ -40,19 +40,19 @@ ReactContextBaseJavaModule(reactContext) {
 private val context: Context = reactContext.applicationContext
 
 override fun getName(): String {
-return "SsoSdkModule"
+  return "SsoSdkModule"
 }
 
 @ReactMethod
 fun initializeBaseUrlAndFileLocation(client_base_url: String) {
-val aes_secret_key_location = R.raw.private_key
-EdugorillaSSO.initializeBaseUrlAndFileLocation(client_base_url, aes_secret_key_location)
+    val aes_secret_key_location = R.raw.private_key
+    EdugorillaSSO.initializeBaseUrlAndFileLocation(client_base_url, aes_secret_key_location)
 }
 
 @ReactMethod
 fun encryptUrlAndOpenWebView(userInfo: String, redirectUrl: String) {
-val user_info: JSONObject = JSONObject(userInfo)
-EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUrl)
+    val user_info: JSONObject = JSONObject(userInfo)
+    EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUrl)
 }
 
 }
@@ -72,11 +72,11 @@ import java.util.*
 class SsoSdkPackage : ReactPackage {
 
 override fun createNativeModules(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<NativeModule> {
-return listOf(SsoSdkModule(reactContext))
+  return listOf(SsoSdkModule(reactContext))
 }
 
 override fun createViewManagers(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<ViewManager<*, *>> {
-return Collections.emptyList()
+  return Collections.emptyList()
 }
 
 }
@@ -116,7 +116,7 @@ This is our sample App:
 [https://gitlab.com/shashwat-vik/react-native-sdk-example](https://gitlab.com/shashwat-vik/react-native-sdk-example)
 
 
-For any query you feel free to contact our support team on
+For any query feel free to contact our support team on
 
 Phone: 0522-3514751
 
