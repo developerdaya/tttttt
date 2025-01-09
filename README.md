@@ -7,24 +7,23 @@ Once you get the private_key then proceed further.
 ### 1. **Add SSO SDK Dependency**
 - Open `android/app/build.gradle` and add the following dependency in the `dependencies` block:
 ```gradle
-dependencies {implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'}
+implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'
 ```
 ---
-### 3. **Modify the MainApplication**
+### 2. **Modify the MainApplication**
 - Add the SsoSdkPackage to include SDK functionality in the React Native application.
 
 `android/app/src/main/java/com/your_project_name/MainApplication.kt`:
 ```kotlin
-override fun getPackages(): List<ReactPackage> =
-PackageList(this).packages.apply {
+override fun getPackages(): List<ReactPackage> = PackageList(this).packages.apply {
 add(SsoSdkPackage())
 }
 
 ```
 ---
-### 4. **Create the SSO SDK Module**
+### 3. **Create the SSO SDK Module**
 
- * This module serves as a bridge between React Native and the Edugorilla SSO SDK.
+ * This module serves as a bridge between React Native and Android Edugorilla SSO SDK.
 `android/app/src/main/java/com/your_project_name/SsoSdkModule.kt`:
 ```kotlin
 package com.your_project_name
@@ -34,17 +33,22 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import org.json.JSONObject
+
 class SsoSdkModule(reactContext: ReactApplicationContext) :
 ReactContextBaseJavaModule(reactContext) {
+
 private val context: Context = reactContext.applicationContext
+
 override fun getName(): String {
 return "SsoSdkModule"
 }
+
 @ReactMethod
 fun initializeBaseUrlAndFileLocation(client_base_url: String) {
 val aes_secret_key_location = R.raw.private_key
 EdugorillaSSO.initializeBaseUrlAndFileLocation(client_base_url, aes_secret_key_location)
 }
+
 @ReactMethod
 fun encryptUrlAndOpenWebView(userInfo: String, redirectUrl: String) {
 val user_info: JSONObject = JSONObject(userInfo)
@@ -53,7 +57,7 @@ EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUr
 }
 ```
 ---
-### 5. **Create the SSO SDK Package**
+### 4. **Create the SSO SDK Package**
 * This file defines the SsoSdkPackage, which registers the SsoSdkModule with React Native.
 * It ensures the native module is accessible from the JavaScript layer of the React Native app.
 `android/app/src/main/java/com/your_project_name/SsoSdkPackage.kt`:
@@ -63,47 +67,26 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.uimanager.ViewManager
 import java.util.*
+
 class SsoSdkPackage : ReactPackage {
-override fun createNativeModules(reactContext:
-com.facebook.react.bridge.ReactApplicationContext): List<NativeModule> {
+
+override fun createNativeModules(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<NativeModule> {
 return listOf(SsoSdkModule(reactContext))
 }
-override fun createViewManagers(reactContext:
-com.facebook.react.bridge.ReactApplicationContext): List<ViewManager<*, *>> {
+
+override fun createViewManagers(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<ViewManager<*, *>> {
 return Collections.emptyList()
 }
+
 }
 ```
 ---
-### 6. **Add Private Key File**
-1. **Create a Directory**
-- Create a `res/raw` folder inside `android/app/src/main`.
-2. **Paste the Key File**
-- Place your `private_key` file inside the `res/raw` directory.
----
-### 7. **Modify Android Manifest**
-- Update `android/app/src/main/AndroidManifest.xml` to include the Internet permission:
-```xml
+### 5. **Add Private Key File**
+* Create a `res/raw` directory in `android/app/src/main`.  
+* Place the `private_key` file inside it.
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <application
-    .....>
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-        android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-</application>
-```
 ---
-### 9. **Initialize the Edugorilla SSO SDK from JavaScript**
+### 6. **Initialize the Edugorilla SSO SDK from JavaScript**
 ```tsx
 // Import the native module for integrating Edugorilla SSO SDK functionality.
 import {NativeModules} from 'react-native';
