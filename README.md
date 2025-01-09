@@ -1,5 +1,3 @@
-Step-by-Step Guide: Setting Up and Integrating SSO SDK in React
-Native
 **Step-by-Step Guide: Setting Up and Integrating SSO SDK in React Native**
 ---
 ### 1. **Setup React Native Project**
