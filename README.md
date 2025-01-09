@@ -2,57 +2,33 @@
 Connect to the support team to get the private_key for React Native SSO SDK. You can connect by using Phone no. 0522-3514751 or sending a mail over [support@edugorilla.org](https://mailto:support@edugorilla.org).
 Once you got the private_key then proceed further.
 
-
-**Step-by-Step Guide: Setting Up and Integrating SSO SDK in React Native**
 ---
-### 1. **Setup React Native Project**
-1. **Initialize a React Native Project**
-```sh
-npx react-native init AwesomeProject
-cd AwesomeProject
-npm install
-```
-2. **Install Necessary Dependencies**
-- Ensure `Node.js`, `React Native CLI`, and `Android Studio` are installed.
-- Run the following commands to verify your setup:
-```sh
-node -v
-npm -v
-npx react-native --version
-```
-3. **Start the Development Server**
-```sh
-npx react-native start
-```
----
-### 2. **Add SSO SDK Dependency**
+### 1. **Add SSO SDK Dependency**
 - Open `android/app/build.gradle` and add the following dependency in the `dependencies` block:
 ```gradle
-dependencies {
-implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'
-}
+dependencies {implementation 'com.gitlab.shashwat-vik:android-sso-sdk:1.10'}
 ```
 ---
-### 3. **Create the MainActivity**
-- Add the following Kotlin code in `android/app/src/main/java/com/awesomeproject/MainActivity.kt`:
+### 2. **Create the MainActivity**
+- Add the following Kotlin code in `android/app/src/main/java/com/your_project_name/MainActivity.kt`:
 ```kotlin
-package com.awesomeproject
+package com.your_project_name
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 class MainActivity : ReactActivity() {
-override fun getMainComponentName(): String = "AwesomeProject"
+override fun getMainComponentName(): String = "your_project_name"
 override fun createReactActivityDelegate(): ReactActivityDelegate =
 DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
 }
 ```
 ---
-### 4. **Create the MainApplication**
+### 3. **Create the MainApplication**
 - Add the following Kotlin code in
-`android/app/src/main/java/com/awesomeproject/MainApplication.kt`:
+`android/app/src/main/java/com/your_project_name/MainApplication.kt`:
 ```kotlin
-package com.awesomeproject
+package com.your_project_name
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -88,10 +64,10 @@ load()
 }
 ```
 ---
-### 5. **Create the SSO SDK Module**
-- Add the following code in `android/app/src/main/java/com/awesomeproject/SsoSdkModule.kt`:
+### 4. **Create the SSO SDK Module**
+- Add the following code in `android/app/src/main/java/com/your_project_name/SsoSdkModule.kt`:
 ```kotlin
-package com.awesomeproject
+package com.your_project_name
 import android.content.Context
 import com.edugorilla.ssologin.EdugorillaSSO
 import com.facebook.react.bridge.ReactApplicationContext
@@ -117,10 +93,10 @@ EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUr
 }
 ```
 ---
-### 6. **Create the SSO SDK Package**
-- Add the following code in `android/app/src/main/java/com/awesomeproject/SsoSdkPackage.kt`:
+### 5. **Create the SSO SDK Package**
+- Add the following code in `android/app/src/main/java/com/your_project_name/SsoSdkPackage.kt`:
 ```kotlin
-package com.awesomeproject
+package com.your_project_name
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.uimanager.ViewManager
@@ -137,43 +113,34 @@ return Collections.emptyList()
 }
 ```
 ---
-### 7. **Add Private Key File**
+### 6. **Add Private Key File**
 1. **Create a Directory**
 - Create a `res/raw` folder inside `android/app/src/main`.
 2. **Paste the Key File**
 - Place your `private_key` file inside the `res/raw` directory.
 ---
-### 8. **Modify Android Manifest**
+### 7. **Modify Android Manifest**
 - Update `android/app/src/main/AndroidManifest.xml` to include the Internet permission:
 ```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-<uses-permission android:name="android.permission.INTERNET" />
-<application
-android:name=".MainApplication"
-android:label="@string/app_name"
-android:icon="@mipmap/ic_launcher"
-android:roundIcon="@mipmap/ic_launcher_round"
-android:allowBackup="false"
-android:theme="@style/AppTheme"
-android:supportsRtl="true">
-<activity
-android:name=".MainActivity"
-android:label="@string/app_name"
-android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestSc
-reenSize|uiMode"
-android:launchMode="singleTask"
-android:windowSoftInputMode="adjustResize"
-android:exported="true">
-<intent-filter>
-<action android:name="android.intent.action.MAIN" />
-<category android:name="android.intent.category.LAUNCHER" />
-</intent-filter>
-</activity>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application
+    .....>
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
 </application>
-</manifest>
 ```
 ---
-### 9. **Create the Index File**
+### 8. **Create the Index File**
 - Add the following code in `index.js`:
 ```javascript
 import {AppRegistry} from 'react-native';
@@ -182,7 +149,7 @@ import {name as appName} from './app.json';
 AppRegistry.registerComponent(appName, () => App);
 ```
 ---
-### 10. **Create the App Component**
+### 9. **Create the App Component**
 - Add the following code in `App.tsx`:
 ```tsx
 import React from 'react';
@@ -192,12 +159,12 @@ const {SsoSdkModule} = NativeModules;
 function App(): React.JSX.Element {
 const startSSO = () => {
 const userInfo = JSON.stringify({
-name: 'Developer Daya',
+name: 'DeveloperDaya',
 email: 'developerdaya123@gmail.com',
 mobile: '9988774455',
 });
-const client_base_url = "https://stgtestseries.edugorilla.com
-const redirect_url = "https://stgtestseries.edugorilla.com;
+const client_base_url = "https://stgtestseries.edugorilla.com"
+const redirect_url = "https://stgtestseries.edugorilla.com";
 SsoSdkModule.initializeBaseUrlAndFileLocation(client_base_url);
 SsoSdkModule.encryptUrlAndOpenWebView(userInfo, redirect_url);
 };
@@ -217,9 +184,15 @@ backgroundColor: '#f8f9fa',
 });
 export default App;
 
+```
+
 ### Congratulation! Your integration is finished.
-This is our sample App: react-native-sdk-example
+This is our sample App:
 [https://gitlab.com/shashwat-vik/react-native-sdk-example](https://gitlab.com/shashwat-vik/react-native-sdk-example)
+
 For any query you feel free to contact our support team on
+
 0522-3514751.
+
 [support@edugorilla.org](https://mailto:support@edugorilla.org).
+
