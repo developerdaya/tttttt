@@ -35,25 +35,25 @@ import com.facebook.react.bridge.ReactMethod
 import org.json.JSONObject
 
 class SsoSdkModule(reactContext: ReactApplicationContext) :
-ReactContextBaseJavaModule(reactContext) {
-
-private val context: Context = reactContext.applicationContext
-
-override fun getName(): String {
-  return "SsoSdkModule"
-}
-
-@ReactMethod
-fun initializeBaseUrlAndFileLocation(client_base_url: String) {
-    val aes_secret_key_location = R.raw.private_key
-    EdugorillaSSO.initializeBaseUrlAndFileLocation(client_base_url, aes_secret_key_location)
-}
-
-@ReactMethod
-fun encryptUrlAndOpenWebView(userInfo: String, redirectUrl: String) {
-    val user_info: JSONObject = JSONObject(userInfo)
-    EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUrl)
-}
+  ReactContextBaseJavaModule(reactContext) {
+  
+  private val context: Context = reactContext.applicationContext
+  
+  override fun getName(): String {
+    return "SsoSdkModule"
+  }
+  
+  @ReactMethod
+  fun initializeBaseUrlAndFileLocation(client_base_url: String) {
+      val aes_secret_key_location = R.raw.private_key
+      EdugorillaSSO.initializeBaseUrlAndFileLocation(client_base_url, aes_secret_key_location)
+  }
+  
+  @ReactMethod
+  fun encryptUrlAndOpenWebView(userInfo: String, redirectUrl: String) {
+      val user_info: JSONObject = JSONObject(userInfo)
+      EdugorillaSSO.encryptUrlAndOpenWebView(context, user_info.toString(), redirectUrl)
+  }
 
 }
 ```
@@ -71,13 +71,13 @@ import java.util.*
 
 class SsoSdkPackage : ReactPackage {
 
-override fun createNativeModules(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<NativeModule> {
-  return listOf(SsoSdkModule(reactContext))
-}
-
-override fun createViewManagers(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<ViewManager<*, *>> {
-  return Collections.emptyList()
-}
+  override fun createNativeModules(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<NativeModule> {
+    return listOf(SsoSdkModule(reactContext))
+  }
+  
+  override fun createViewManagers(reactContext: com.facebook.react.bridge.ReactApplicationContext): List<ViewManager<*, *>> {
+    return Collections.emptyList()
+  }
 
 }
 ```
