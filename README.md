@@ -1,6 +1,7 @@
 ### Requirement:
 Connect to the support team to get the private_key for React Native SSO SDK. You can connect by using Phone no. 0522-3514751 or sending a mail over [support@edugorilla.org](https://mailto:support@edugorilla.org).
-Once you got the private_key then proceed further.
+
+Once you get the private_key then proceed further.
 
 ---
 ### 1. **Add SSO SDK Dependency**
@@ -122,8 +123,9 @@ return Collections.emptyList()
 ### 7. **Modify Android Manifest**
 - Update `android/app/src/main/AndroidManifest.xml` to include the Internet permission:
 ```xml
-  <uses-permission android:name="android.permission.INTERNET" />
-  <application
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
     .....>
       <activity
         android:name=".MainActivity"
